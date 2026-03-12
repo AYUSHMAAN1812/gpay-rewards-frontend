@@ -20,7 +20,7 @@ export const metadata = {
   openGraph: {
     title: "Free Unused G-Pay Reward Codes",
     description: "I'm giving away my unused Google Pay rewards for free. Grab them before they're gone!",
-    url: "https://gpay-rewards-frontend-1.vercel.app",
+    url: "https://gpay-rewards-frontend.vercel.app",
     siteName: "GPay Rewards India",
     type: "website",
   },
