@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import CouponCard from '@/components/CouponCard';
+import CouponCard from '../components/CouponCard.js';
 
 export default function Home() {
   const [coupons, setCoupons] = useState([]);
