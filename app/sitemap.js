@@ -1,6 +1,6 @@
 export default function sitemap() {
   // Replace this with your actual Vercel URL once the site is live
-  const baseUrl = 'https://gpay-rewards-frontend-1.vercel.app'; 
+  const baseUrl = 'https://your-site.vercel.app'; 
 
   return [
     {
