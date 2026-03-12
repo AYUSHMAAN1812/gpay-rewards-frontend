@@ -8,6 +8,6 @@ export default function robots() {
       allow: '/',
       disallow: '/admin-panel', // 💡 We hide the admin panel so it doesn't show up in search results
     },
-    sitemap: 'https://your-site.vercel.app/sitemap.xml', // Update this after deployment
+    // sitemap: 'https://your-site.vercel.app/sitemap.xml', // Update this after deployment
   }
 }

@@ -17,11 +17,12 @@ export default function AdminPanel() {
     setStatus({ type: 'loading', message: 'Adding reward...' });
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/coupons/add`, {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://gpay-backend-9c58.onrender.com/api';
+      const res = await fetch(`${API_BASE}/coupons/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-admin-password': formData.password 
+          'x-admin-password': formData.password
         },
         body: JSON.stringify({
           brand: formData.brand,
@@ -60,11 +61,11 @@ export default function AdminPanel() {
           {/* Secret Password Field */}
           <div className="relative">
             <Key className="absolute left-3 top-3 text-slate-400" size={20} />
-            <input 
+            <input
               type="password" placeholder="Admin Secret Password" required
               className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
               value={formData.password}
-              onChange={(e) => setFormData({...formData, password: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             />
           </div>
 
@@ -73,49 +74,49 @@ export default function AdminPanel() {
           {/* Brand Name */}
           <div className="relative">
             <Tag className="absolute left-3 top-3 text-slate-400" size={20} />
-            <input 
+            <input
               type="text" placeholder="Brand (e.g., Zomato, Swiggy)" required
               className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl outline-none focus:border-blue-500"
               value={formData.brand}
-              onChange={(e) => setFormData({...formData, brand: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
             />
           </div>
 
           {/* Coupon Code */}
           <div className="relative">
             <span className="absolute left-3 top-3 font-bold text-slate-400">#</span>
-            <input 
+            <input
               type="text" placeholder="Coupon Code" required
               className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl font-mono uppercase text-blue-700"
               value={formData.code}
-              onChange={(e) => setFormData({...formData, code: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, code: e.target.value })}
             />
           </div>
 
           {/* Details */}
           <div className="relative">
             <Info className="absolute left-3 top-3 text-slate-400" size={20} />
-            <textarea 
+            <textarea
               placeholder="Offer details (e.g., 50% off on first order)"
               className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl h-24 outline-none focus:border-blue-500"
               value={formData.details}
-              onChange={(e) => setFormData({...formData, details: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, details: e.target.value })}
             />
           </div>
 
           {/* Expiry Date */}
           <div className="relative">
             <Calendar className="absolute left-3 top-3 text-slate-400" size={20} />
-            <input 
+            <input
               type="date" required
               className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl outline-none focus:border-blue-500 text-slate-600"
               value={formData.expiryDate}
-              onChange={(e) => setFormData({...formData, expiryDate: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, expiryDate: e.target.value })}
             />
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold shadow-lg shadow-blue-200 transition-all active:scale-95"
           >
             Publish to Website
@@ -123,10 +124,9 @@ export default function AdminPanel() {
         </form>
 
         {status.message && (
-          <div className={`mt-6 p-4 rounded-xl text-center text-sm font-medium ${
-            status.type === 'success' ? 'bg-green-50 text-green-700' : 
-            status.type === 'error' ? 'bg-red-50 text-red-700' : 'bg-blue-50 text-blue-700'
-          }`}>
+          <div className={`mt-6 p-4 rounded-xl text-center text-sm font-medium ${status.type === 'success' ? 'bg-green-50 text-green-700' :
+              status.type === 'error' ? 'bg-red-50 text-red-700' : 'bg-blue-50 text-blue-700'
+            }`}>
             {status.message}
           </div>
         )}

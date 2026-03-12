@@ -1,61 +1,48 @@
 'use client';
 import { useState } from 'react';
 import { Copy, Check, ExternalLink } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 export default function CouponCard({ coupon, onClaimed }) {
   const [copied, setCopied] = useState(false);
 
-  const handleClaim = async () => {
-    try {
-      // 1. Copy to clipboard
-      await navigator.clipboard.writeText(coupon.code);
-      setCopied(true);
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-
-      // 2. Tell backend to mark as used
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/coupons/claim/${coupon._id}`, {
-        method: 'PATCH',
-      });
-
-      // 3. Remove from UI after a short delay
-      setTimeout(() => {
-        onClaimed(coupon._id);
-      }, 2000);
-    } catch (err) {
-      console.error("Failed to claim:", err);
-    }
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(coupon.code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="border rounded-xl p-5 shadow-sm bg-white hover:shadow-md transition-shadow">
+    <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100 hover:shadow-xl transition-shadow">
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3 className="text-xl font-bold text-gray-800">{coupon.brand}</h3>
           <p className="text-sm text-gray-500">{coupon.details}</p>
         </div>
-        <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">
-          Active
-        </span>
+        <div className="bg-orange-100 text-orange-600 px-3 py-1 rounded-lg text-xs font-bold uppercase">
+          New
+        </div>
       </div>
       
-      <div className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg border border-dashed border-gray-300">
-        <code className="flex-1 font-mono font-bold text-blue-600">
-          {copied ? "COPIED!" : "••••••••"}
-        </code>
+      <div className="relative mt-4">
+        <div className="bg-gray-50 border-2 border-dashed border-gray-200 p-4 rounded-xl font-mono text-center text-lg font-bold text-blue-600">
+          {coupon.code}
+        </div>
         <button 
-          onClick={handleClaim}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
-            copied ? 'bg-green-500 text-white' : 'bg-blue-600 text-white hover:bg-blue-700'
-          }`}
+          onClick={copyToClipboard}
+          className="absolute right-2 top-2 p-2 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-colors"
         >
-          {copied ? <Check size={18} /> : <Copy size={18} />}
-          {copied ? 'Claimed' : 'Reveal & Copy'}
+          {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} className="text-gray-400" />}
         </button>
       </div>
-      <p className="text-[10px] text-gray-400 mt-3 italic">
-        Expires: {new Date(coupon.expiryDate).toLocaleDateString()}
-      </p>
+
+      <div className="mt-6 flex gap-3">
+        <button 
+          onClick={() => onClaimed(coupon._id)}
+          className="flex-1 bg-gray-900 text-white py-3 rounded-xl font-medium hover:bg-black transition-colors"
+        >
+          Mark as Used
+        </button>
+      </div>
     </div>
   );
 }

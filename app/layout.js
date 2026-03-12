@@ -1,3 +1,4 @@
+import "./globals.css"; // 👈 This makes Tailwind work on the live site
 export const metadata = {
   title: "Free Unused G-Pay Reward Codes | Updated Daily",
   description: "Get free Zomato, Swiggy, and Ajio discount codes from my unused Google Pay scratch cards. No login required, first come first served!",
